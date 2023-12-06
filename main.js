@@ -112,6 +112,7 @@ function getAvgAndTotalPopulation(countries) {
     return obj
 }
 
+// test commit
 async function test5() {
     try {
         const countries = await AjaxRequestForIncludeName()
