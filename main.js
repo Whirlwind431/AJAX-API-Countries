@@ -2,7 +2,7 @@
 
 // ------------ M A I N    F U N C T I O N S   F O R    A L L    C O U N T R I E S-------------------------
 
-document.getElementById("myForm").addEventListener('click',function(e){
+document.getElementById("myForm").addEventListener('click', function (e) {
     e.preventDefault()
 })
 // test 1 - ajaxRequest + display all countries
@@ -41,7 +41,7 @@ async function AjaxRequest() {
 }
 // ------------ M A I N    F U N C T I O N    F O R    S P E C I F I C    S E A R C H-------------------------
 
-// test 4 - ajaxRequest + display all countries
+// test 4 - ajaxRequest + display  countries
 async function test4() {
     try {
         const countries = await AjaxRequestForIncludeName()
@@ -93,6 +93,7 @@ function getAvgAndTotalPopulation(countries) {
     let europe = 0
     let africa = 0
     let oceania = 0
+
     for (const country of countries) {
         country.region === "Africa" ? africa++ : +0
         country.region === "Asia" ? asia++ : +0
@@ -103,23 +104,93 @@ function getAvgAndTotalPopulation(countries) {
         totalCountriesResult++
         counter++
     }
+
+
+
     avg = totalPopulation / counter
     const obj = { totalPopulation, avg, totalCountriesResult, americas, asia, europe, africa, oceania }
     return obj
 }
 
-
-function drawCards(countries) {
-    const specifyCountries = document.getElementById('specifyCountries')
-
-    let html = '<h3>List of countries according to your search:</h3>'
-    html += '<ul>'
-    for (const country of countries) {
-        html += `<li>${country.name.official}</li>`
+async function test5() {
+    try {
+        const countries = await AjaxRequestForIncludeName()
+        getCurrencies(countries)
+        displayCurrencies(countries)
+    } catch (error) {
+        console.log(error.message);
     }
-    html += `</ul>`
-    specifyCountries.innerHTML = html
 }
+
+
+function getCurrencies(countries) {
+    let obj
+    let arraycurrencies = []
+    let currency
+    let newObj
+    let currencyArray = []
+    for (let country of countries) {
+        obj = country.currencies
+        currency = Object.keys(obj)
+        currencyArray.push(currency)
+        newObj = {
+            country: country.name,
+            currencies: currency
+        }
+        arraycurrencies.push(newObj);
+    }
+
+    let map = currencyArray.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
+
+    console.log(arraycurrencies);
+    return { map, arraycurrencies }
+}
+
+function displayCurrencies(countries) {
+    const tHeaderBonus = document.getElementById("tHeaderBonus")
+    const tBodyBonus = document.getElementById("tBodyBonus")
+    const spanny = document.getElementById('spanny')
+    const obj = getCurrencies(countries)
+    const currencies = obj.arraycurrencies
+    const mapping = obj.map
+    let arrayCurrencies = []
+    for (const item in mapping) {
+        arrayCurrencies.push(item);
+
+    }
+    const counter = {};
+    let html2 = ''
+    arrayCurrencies.forEach(item => {
+        counter[item] = (counter[item] || 0) + 1;
+
+    });
+
+    // Display the counts
+    for (const item in counter) {
+        console.log(`${item}: ${counter[item]} `);
+        html2 += `${item}: ${counter[item]}``
+    }
+
+
+
+
+    let HeaderHtmlBonus = `<tr>
+    <th> Country Name</th>
+    <th>Currency</th>
+    </tr>`
+    let html = ''
+    for (const country of currencies) {
+        html += '<tr>'
+        html += `<td> ${country.country.official}</td> `
+        html += `<td> ${country.currencies}</td> `
+        html += `</tr>`
+    }
+
+    tHeaderBonus.innerHTML = HeaderHtmlBonus
+    tBodyBonus.innerHTML = html
+    spanny.innerHTML = html2
+}
+
 
 
 function drawAvgAndTotalPopulation(countries) {
@@ -148,6 +219,7 @@ function drawAvgAndTotalPopulation(countries) {
 function drawAllCountries(countries) {
     const tBody = document.getElementById('tBody')
     const tHeader = document.getElementById('tHeader')
+
     let HeaderHtml = `<tr>
                       <th> Country Name</th>
                       <th>Number of citizens</th>
@@ -232,3 +304,4 @@ document.getElementById("testBtn1").addEventListener('click', test1)
 document.getElementById("testBtn2").addEventListener('click', test2)
 document.getElementById("testBtn3").addEventListener('click', test3)
 document.getElementById("testBtn4").addEventListener('click', test4)
+document.getElementById("testBtn5").addEventListener('click', test5)
