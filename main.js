@@ -168,7 +168,7 @@ function displayCurrencies(countries) {
     // Display the counts
     for (const item in counter) {
         console.log(`${item}: ${counter[item]} `);
-        html2 += `${item}: ${counter[item]}``
+        html2 += `${item}: ${counter[item]}`
     }
 
 
