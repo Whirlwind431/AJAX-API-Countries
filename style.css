@@ -85,6 +85,35 @@ body {
     padding: 5px;
 }
 
-footer {
+.footer {
     font-size: 20px;
 }
+
+.footerLink {
+    color: #000;
+}
+
+#divRegionTable,
+#table {
+    border-radius: 5px;
+}
+
+.mainHeader {
+    box-shadow: 5px 5px 5px rgb(152, 140, 140);
+    border-radius: 10px;
+
+}
+
+.mainHeader:hover,
+button:hover {
+    box-shadow: 5px 5px 5px rgb(149, 175, 188);
+}
+
+input {
+    border-radius: 10px;
+}
+
+input:focus {
+    background-color: rgba(207, 204, 211, 0.467);
+}
+
