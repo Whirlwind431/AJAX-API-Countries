@@ -131,65 +131,83 @@ function getCurrencies(countries) {
     let newObj
     let currencyArray = []
     for (let country of countries) {
-        obj = country.currencies
-        currency = Object.keys(obj)
-        currencyArray.push(currency)
-        newObj = {
-            country: country.name,
-            currencies: currency
+        if (country.currencies != null) {
+            obj = country.currencies
+            currency = Object.keys(obj)
+            currencyArray.push(currency)
+            newObj = {
+                country: country.name.official,
+                currencies: currency
+            }
+            arraycurrencies.push(newObj);
         }
-        arraycurrencies.push(newObj);
+
     }
 
-    let map = currencyArray.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
 
     console.log(arraycurrencies);
-    return { map, arraycurrencies }
+    return arraycurrencies
 }
 
 function displayCurrencies(countries) {
     const tHeaderBonus = document.getElementById("tHeaderBonus")
     const tBodyBonus = document.getElementById("tBodyBonus")
-    const spanny = document.getElementById('spanny')
-    const obj = getCurrencies(countries)
-    const currencies = obj.arraycurrencies
-    const mapping = obj.map
-    let arrayCurrencies = []
-    for (const item in mapping) {
-        arrayCurrencies.push(item);
 
-    }
+    const tHeaderCurrencyTable = document.getElementById("tHeaderCurrencyTable")
+    const tBodyCurrencyTable = document.getElementById("tBodyCurrencyTable")
+
+
+    const arraycurrencies = getCurrencies(countries)
+    console.log(arraycurrencies);
+
     const counter = {};
-    let html2 = ''
-    arrayCurrencies.forEach(item => {
-        counter[item] = (counter[item] || 0) + 1;
 
+    arraycurrencies.forEach(obj => {
+        const count = obj.currencies;
+        console.log(count);
+        counter[count] = (counter[count] || 0) + 1;
     });
 
-    // Display the counts
-    for (const item in counter) {
-        console.log(`${item}: ${counter[item]} `);
-        html2 += `${item}: ${counter[item]}`
+
+    // display currencies and count
+    const currenciesHeader = document.getElementById('currenciesHeader')
+    const headerHtmlCurrencies = `<tr>
+    <th> Currency name</th>
+    <th>Count</th>
+    </tr>`
+
+    let html2 = ''
+    for (const count in counter) {
+        html2 += '<tr>'
+        html2 += `<td >${count} </td>`;
+        html2 += `<td >${counter[count]}</td >`
+        html2 += `</tr>`
     }
 
+    currenciesHeader.innerHTML = "Currenciens and countries number:"
+    tHeaderCurrencyTable.innerHTML = headerHtmlCurrencies
+    tBodyCurrencyTable.innerHTML = html2
 
 
-
-    let HeaderHtmlBonus = `<tr>
+    // display countries and currencies
+    const taskHeaderBonus = document.getElementById('taskHeaderBonus')
+    const headerHtmlBonus = `
+    <tr>
     <th> Country Name</th>
     <th>Currency</th>
     </tr>`
+
     let html = ''
-    for (const country of currencies) {
+    for (const country of arraycurrencies) {
         html += '<tr>'
-        html += `<td> ${country.country.official}</td> `
+        html += `<td> ${country.country}</td> `
         html += `<td> ${country.currencies}</td> `
         html += `</tr>`
     }
 
-    tHeaderBonus.innerHTML = HeaderHtmlBonus
+    taskHeaderBonus.innerHTML = "Countries and count:"
+    tHeaderBonus.innerHTML = headerHtmlBonus
     tBodyBonus.innerHTML = html
-    spanny.innerHTML = html2
 }
 
 

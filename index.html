@@ -29,7 +29,7 @@
                 <h3>Specific Search</h3>
                 <label for="inputName">Country name</label><br>
                 <input type="text" id="inputName" placeholder="enter a country name"><br><br>
-                <button id="testBtn4" class="btn btn-info">Get Specify country info</button>
+                <button id="testBtn4" class="btn btn-info">Get Specify country info</button><br><br>
                 <button id="testBtn5" class="btn btn-info">Get Specify currencies</button>
             </form>
         </div>
@@ -37,6 +37,8 @@
         <i class="bi bi-arrow-up-circle-fill back-to-top hidden"></i>
 
         <div id="divResponse">
+
+            <!-- all countries -->
             <div id="info">
                 <div id="specifyCountries"></div>
                 <div>
@@ -54,9 +56,7 @@
             </div>
 
             <!-- Region information -->
-
             <div id="divRegionTable">
-
                 <h3 id="regionsHeader"></h3>
                 <table id="regionTable">
                     <thead id="tHeaderRegionTable">
@@ -66,7 +66,7 @@
 
                     </tbody>
                 </table>
-                <span id="spanny"></span>
+
             </div>
 
             <!-- display all countries with population -->
@@ -80,8 +80,23 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- all currencies and count -->
+            <div id="spanny">
+                <h3 id="currenciesHeader"></h3>
+                <table id="currencyTable">
+                    <thead id="tHeaderCurrencyTable">
+
+                    </thead>
+                    <tbody id="tBodyCurrencyTable">
+
+                    </tbody>
+            </div>
+
+            <!--  all countries and currencies -->
             <div id="bonus">
                 <table>
+                    <h3 id="taskHeaderBonus"></h3>
                     <thead id="tHeaderBonus">
 
                     </thead>
